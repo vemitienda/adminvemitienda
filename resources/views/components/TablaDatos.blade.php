@@ -48,6 +48,7 @@
                                 </a>
                                 <div class="dropdown-menu" style="">
 
+                                    @if(@$edit)
                                     <a class="dropdown-item" href="{{ route($resource.'.edit',$item->id) }}"><i
                                             class="fa fa-edit"></i>
                                         Editar</a>
@@ -56,6 +57,7 @@
                                     <a class="dropdown-item" href="{{ route($resource.'.edit',$item->id) }}"><i
                                             class="fa fa-eye"></i>
                                         Ver datos</a>
+                                    @endif
 
                                     <div class="dropdown-divider"></div>
 

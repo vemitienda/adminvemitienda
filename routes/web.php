@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\PlansController;
 use App\Http\Controllers\Admin\ServicesController;
+use App\Http\Controllers\Admin\PlanServicesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,6 +30,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('usuarios', UsersController::class);
     Route::resource('plans', PlansController::class);
     Route::resource('services', ServicesController::class);
+    Route::resource('planservices', PlanServicesController::class);
 });
 
 

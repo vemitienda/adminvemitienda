@@ -16,4 +16,9 @@ class Service extends Model
     {
         return $this->belongsToMany('App\Models\Plan');
     }
+
+    public function planservices()
+    {
+        return $this->hasMany('App\Models\PlanService', 'service_id');
+    }
 }

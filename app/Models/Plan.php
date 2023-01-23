@@ -16,6 +16,11 @@ class Plan extends Model
         return $this->belongsToMany('App\Models\Service', 'plan_services');
     }
 
+    public function planservices()
+    {
+        return $this->hasMany('App\Models\PlanService', 'plan_id');
+    }
+
     public function users()
     {
         return $this->belongsToMany('App\User', 'plan_users');
