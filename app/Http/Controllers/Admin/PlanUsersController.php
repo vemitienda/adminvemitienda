@@ -40,6 +40,8 @@ class PlanUsersController extends Controller
         ])
             ->leftJoin('plans', 'plan_users.plan_id', '=', 'plans.id')
             ->leftJoin('users', 'plan_users.user_id', '=', 'users.id')
+            ->orderBy('id', 'desc')
+            ->groupBy('user') //Para usar esto, se colocó 'strict' => false en config/database.php
             ->paginate(9);
 
         $datos['nombreColumnas'] = collect([
