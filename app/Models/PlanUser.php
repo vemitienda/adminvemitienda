@@ -15,4 +15,14 @@ class PlanUser extends Model
     {
         return $this->hasMany('App\Models\Payment');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id');
+    }
+
+    public function plan()
+    {
+        return $this->belongsTo('App\Models\Plan', 'plan_id');
+    }
 }

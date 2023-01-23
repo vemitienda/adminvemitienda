@@ -25,11 +25,30 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+               <li class="nav-item">
+                <a href="#" class="nav-link {{ Request::segment(1)=='admin' ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-cog"></i>
+                    <p>
+                        Administración
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview" style="display: none;">
+                    <li class="nav-item">
+                        <a href="{{ route('planusers.index') }}"
+                            class="nav-link {{ Request::segment(2)=='planusers' ? 'active' : '' }}">
+                            <i class="nav-icon fa fa-users"></i>
+                            <p>Planes de Usuarios</p>
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link {{ Request::segment(1)=='admin' ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-mail-bulk"></i>
+                        <i class="nav-icon fas fa-cogs"></i>
                         <p>
-                            Administración
+                            Configuración
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>

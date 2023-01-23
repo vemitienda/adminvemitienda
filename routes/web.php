@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\PlansController;
 use App\Http\Controllers\Admin\ServicesController;
 use App\Http\Controllers\Admin\PlanServicesController;
+use App\Http\Controllers\Admin\PlanUsersController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,6 +32,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('plans', PlansController::class);
     Route::resource('services', ServicesController::class);
     Route::resource('planservices', PlanServicesController::class);
+    Route::resource('planusers', PlanUsersController::class);
 });
 
 

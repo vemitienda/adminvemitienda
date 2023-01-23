@@ -3,8 +3,8 @@
         @if(@$label)
         <label class="control-label">{{@$label}} @if(@$required) <span class="text-danger">*</span> @endif</label>
         @endif
-
-        <select id="{{@$id?$id:$name}}" @if(@$multiple) multiple="" @endif name="{{@$name}}" @if(@$placeholder) data-placeholder="{{ $placeholder }}" @endif
+        <select id="{{@$id?$id:$name}}" @if(@$multiple) multiple="" @endif name="{{@$name}}" @if(@$placeholder)
+            data-placeholder="{{ $placeholder }}" @endif
             class="form-control {{@$class?$class:''}}  @error(@$name) is-invalid @enderror chosen-container chosen-container-single">
             @if(@$datos)
             @foreach ($datos as $item)
@@ -15,8 +15,8 @@
             $id_control=$item->id;
             }
             @endphp
-            <option value="{{$id_control}}" @if(@$selected) @if(in_array($id_control,$selected)) selected="selected" @endif
-                @endif>@if(isset($item->label)){{$item->label}}@else{{ $item->name }} @endif</option>
+            <option value="{{$id_control}}" @if(@$selected) @if($selected==$id_control) selected="selected" @endif
+                @endif>{{$item->label}}</option>
             @endforeach
             @endif
         </select>

@@ -3,19 +3,23 @@
         @if(@$label)
         <label class="control-label">{{@$label}} @if(@$required) <span class="text-danger">*</span> @endif</label>
         @endif
-        <select id="{{@$id?$id:$name}}" name="{{@$name}}" class="form-control {{@$class?$class:''}} chosen-container chosen-container-single @error(@$name) is-invalid @enderror">
+        <select id="{{@$id?$id:$name}}" name="{{@$name}}"
+            class="form-control {{@$class?$class:''}} chosen-container chosen-container-single @error(@$name) is-invalid @enderror">
             <option value="">{{@$optionValue?$optionValue:'Seleccione una opción'}}</option>
             @if(@$datos)
+            info($datos);
             @foreach ($datos as $item)
             @php
-            if(!$item->id){
+            if(is_null($item->id)){
             $id_control=$item->label;
             }else{
             $id_control=$item->id;
             }
             @endphp
-            <option value="{{$id_control}}" @if(@$selected) @if($selected==$id_control) selected="selected" @endif
-                @endif>{{$item->label}}</option>
+            <option value="{{$id_control}}" @if(!is_null(@$selected)) @if($selected==$id_control) selected="selected"
+                @endif @endif>
+                {{$item->label}}
+            </option>
             @endforeach
             @endif
         </select>
