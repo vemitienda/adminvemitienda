@@ -91,7 +91,32 @@ class PlanUsersController extends Controller
      */
     public function show($id)
     {
-        //
+        $planUser = PlanUser::find($id);
+        $datos['infoData'] = PlanUser::select([
+            'plan_users.id',
+            'users.email as user',
+            'plans.name as plan',
+            'plan_users.created_at',
+            DB::raw("if(plan_users.activo=1,'Si','No') as activo"),
+        ])
+            ->leftJoin('plans', 'plan_users.plan_id', '=', 'plans.id')
+            ->leftJoin('users', 'plan_users.user_id', '=', 'users.id')
+            ->where('user_id', $planUser->user_id)
+            ->orderBy('id', 'desc')
+            ->get();
+
+        $datos['nombreColumnas'] = collect([
+            'User'   => 'user',
+            'Plan'   => 'plan',
+            'Activo' => 'activo',
+            'Fecha' => 'created_at',
+        ]);
+
+        $datos['token'] = csrf_token();
+
+        $data['data'] = $datos;
+
+        return view('Admin.PlanUsers.show', $data);
     }
 
     /**

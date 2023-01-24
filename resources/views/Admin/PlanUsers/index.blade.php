@@ -56,7 +56,7 @@
                                         Editar</a>
 
 
-                                    <a class="dropdown-item" href="{{ route('planusers.edit',$item->id) }}"><i
+                                    <a class="dropdown-item" href="{{ route('planusers.show',$item->id) }}"><i
                                             class="fa fa-eye"></i>
                                         Historial de Planes</a>
 
@@ -96,6 +96,4 @@
     </div>
     @endif
 </div>
-</div>
-
 @endsection
