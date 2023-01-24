@@ -17,6 +17,8 @@
 <link rel=" stylesheet" href="{{ asset('adminlte3/plugins/datatables-responsive/css/responsive.bootstrap4.min.css?v='.$version)}}">
 <link rel=" stylesheet" href="{{ asset('adminlte3/plugins/datatables-buttons/css/buttons.bootstrap4.min.css?v='.$version)}}">
 <link rel=" stylesheet" href="{{ asset('adminlte3/css/adminlte.min.css?v='.$version)}}">
+<link rel=" stylesheet" href="{{ asset('adminlte3/css/jquery-ui.min.css')}}">
+<link rel=" stylesheet" href="{{ asset('adminlte3/css/jquery-ui.theme.min.css')}}">
 
 
 <!-- Tempusdominus Bootstrap 4 -->

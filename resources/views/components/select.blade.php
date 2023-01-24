@@ -3,7 +3,7 @@
         @if(@$label)
         <label class="control-label">{{@$label}} @if(@$required) <span class="text-danger">*</span> @endif</label>
         @endif
-        <select id="{{@$id?$id:$name}}" name="{{@$name}}"
+        <select @if(@$disabled) disabled @endif id="{{@$id?$id:$name}}" name="{{@$name}}"
             class="form-control {{@$class?$class:''}} chosen-container chosen-container-single @error(@$name) is-invalid @enderror">
             <option value="">{{@$optionValue?$optionValue:'Seleccione una opción'}}</option>
             @if(@$datos)

@@ -26,6 +26,13 @@
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                 <li class="nav-item">
+                    <a href="{{ route('payments.index') }}"
+                        class="nav-link {{ Request::segment(2)=='payments' ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-cog"></i>
+                        <p>Pagos</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="#" class="nav-link {{ Request::segment(1)=='admin' ? 'active' : '' }}">
                         <i class="nav-icon fas fa-cog"></i>
                         <p>
@@ -35,76 +42,76 @@
                     </a>
                     <ul class="nav nav-treeview" style="display: none;">
                         <li class="nav-item">
-                        <li class="nav-item">
                             <a href="{{ route('paymentmethods.index') }}"
                                 class="nav-link {{ Request::segment(2)=='paymentmethods' ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-cog"></i>
                                 <p>Métodos de Pago</p>
                             </a>
                         </li>
-                        <a href="{{ route('planusers.index') }}"
-                            class="nav-link {{ Request::segment(2)=='planusers' ? 'active' : '' }}">
-                            <i class="nav-icon fa fa-users"></i>
-                            <p>Planes de Usuarios</p>
-                        </a>
+                        <li class="nav-item">
+                            <a href="{{ route('planusers.index') }}"
+                                class="nav-link {{ Request::segment(2)=='planusers' ? 'active' : '' }}">
+                                <i class="nav-icon fa fa-users"></i>
+                                <p>Planes de Usuarios</p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link {{ Request::segment(1)=='admin' ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-cogs"></i>
+                        <p>
+                            Configuración
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" style="display: none;">
+                        <li class="nav-item">
+                            <a href="{{ route('usuarios.index') }}"
+                                class="nav-link {{ Request::segment(2)=='usuarios' ? 'active' : '' }}">
+                                <i class="nav-icon fa fa-user-alt"></i>
+                                <p>Usuarios</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('plans.index') }}"
+                                class="nav-link {{ Request::segment(2)=='plans' ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-book-open"></i>
+                                <p>Planes</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('services.index') }}"
+                                class="nav-link {{ Request::segment(2)=='services' ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>Servicios</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('planservices.index') }}"
+                                class="nav-link {{ Request::segment(2)=='planservices' ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>Planes y Servicios</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
-            </ul>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link {{ Request::segment(1)=='admin' ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-cogs"></i>
-                    <p>
-                        Configuración
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview" style="display: none;">
-                    <li class="nav-item">
-                        <a href="{{ route('usuarios.index') }}"
-                            class="nav-link {{ Request::segment(2)=='usuarios' ? 'active' : '' }}">
-                            <i class="nav-icon fa fa-user-alt"></i>
-                            <p>Usuarios</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('plans.index') }}"
-                            class="nav-link {{ Request::segment(2)=='plans' ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-book-open"></i>
-                            <p>Planes</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('services.index') }}"
-                            class="nav-link {{ Request::segment(2)=='services' ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-edit"></i>
-                            <p>Servicios</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('planservices.index') }}"
-                            class="nav-link {{ Request::segment(2)=='planservices' ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-edit"></i>
-                            <p>Planes y Servicios</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
 
 
-
-            {{-- <li class="nav-item">
-                <a href="{{ route('logout') }}" class="nav-link"
-                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    <i class="nav-icon fas fa-sign-out-alt"></i>
-                    <p>
-                        Salir
-                    </p>
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                    @csrf
-                </form>
-            </li> --}}
+                {{-- <li class="nav-item">
+                    <a href="{{ route('logout') }}" class="nav-link"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="nav-icon fas fa-sign-out-alt"></i>
+                        <p>
+                            Salir
+                        </p>
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </li> --}}
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

@@ -21,7 +21,6 @@ class PlanUsersController extends Controller
             (object)['id' => 1, 'label' => 'Si'],
             (object)['id' => 0, 'label' => 'No']
         ];
-        info($this->activo);
     }
     /**
      * Display a listing of the resource.
