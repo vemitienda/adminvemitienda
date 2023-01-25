@@ -89,7 +89,9 @@
 
                 </tr>
                 @empty
-
+                <tr>
+                    <td class="text-center" colspan="6">No hay datos disponibles</td>
+                </tr>
                 @endforelse
             </tbody>
         </table>
