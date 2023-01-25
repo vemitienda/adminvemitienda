@@ -98,7 +98,18 @@
                     </ul>
                 </li>
 
-
+                <li class="nav-item">
+                    <form style="display: inline" action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <a href="#" onclick="this.closest('form').submit()" class="nav-link">
+                            <i class="nav-icon fas fa-sign-out-alt"></i>
+                            <p>
+                                Logout
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                    </form>
+                </li>
 
                 {{-- <li class="nav-item">
                     <a href="{{ route('logout') }}" class="nav-link"

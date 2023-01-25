@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\PlansController;
@@ -20,16 +21,15 @@ use App\Http\Controllers\Admin\PaymentsController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
+Route::get('/login', [LoginController::class, 'login'])->name('login');
+Route::post('/loguear', [LoginController::class, 'loguear'])->name('loguear');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Auth::routes();
 
-// Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
-//     Route::resource('usuarios', UsersController::class);
-// });
-
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('usuarios', UsersController::class);
     Route::resource('plans', PlansController::class);
     Route::resource('services', ServicesController::class);
@@ -38,6 +38,5 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('paymentmethods', PaymentMethodsController::class);
     Route::resource('payments', PaymentsController::class);
 });
-
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
