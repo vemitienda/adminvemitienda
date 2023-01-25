@@ -89,9 +89,7 @@
 
                 </tr>
                 @empty
-                <tr>
-                    <td class="text-center" colspan="{{ $data['nombreColumnas']->count() + 1 }}"">No hay datos disponibles</td>
-                </tr>
+
                 @endforelse
             </tbody>
         </table>
