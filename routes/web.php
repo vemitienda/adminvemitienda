@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\PlanServicesController;
 use App\Http\Controllers\Admin\PlanUsersController;
 use App\Http\Controllers\Admin\PaymentMethodsController;
 use App\Http\Controllers\Admin\PaymentsController;
+use App\Http\Controllers\PruebasController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,6 +28,8 @@ Route::get('/', function () {
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/loguear', [LoginController::class, 'loguear'])->name('loguear');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::get('/pruebas/{quantity}', [PruebasController::class, 'sumarDias'])->name('pruebas');
 
 // Auth::routes();
 
