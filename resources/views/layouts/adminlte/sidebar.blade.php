@@ -103,10 +103,7 @@
                         @csrf
                         <a href="#" onclick="this.closest('form').submit()" class="nav-link">
                             <i class="nav-icon fas fa-sign-out-alt"></i>
-                            <p>
-                                Logout
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
+                            <p>Logout</p>
                         </a>
                     </form>
                 </li>
