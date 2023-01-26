@@ -17,11 +17,7 @@
             @csrf()
             <div class="card-body">
                 <div class="row">
-                    <x-select columns=6 label="Usuario" required=true name="user_id" :datos="@$users" />
-                    <x-select columns=3 label="Plan" required=true name="plan_id" :datos="@$plans" />
-                    <x-select columns=3 label="Pagado" required=true name="paid_out" :datos="@$pagado" />
-                    <x-text type="date" columns=3 label='Inicio' required="true" name="start_date" />
-                    <x-text type="date" columns=3 label='Fin' required="true" name="end_date" />
+                    <x-select class="select2" columns=6 label="Usuario" required=true name="user_id" :datos="@$users" />
                 </div>
             </div>
 
@@ -33,4 +29,12 @@
     </div>
 
 </div>
+@endsection
+@section('js')
+    <script>
+        $('.datepicker').datepicker({
+            format: 'mm/dd/yyyy',
+            startDate: '-3d'
+        });
+    </script>
 @endsection

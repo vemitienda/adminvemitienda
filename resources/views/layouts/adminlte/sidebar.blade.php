@@ -81,20 +81,6 @@
                                 <p>Planes</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ route('services.index') }}"
-                                class="nav-link {{ Request::segment(2)=='services' ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-edit"></i>
-                                <p>Servicios</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('planservices.index') }}"
-                                class="nav-link {{ Request::segment(2)=='planservices' ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-edit"></i>
-                                <p>Planes y Servicios</p>
-                            </a>
-                        </li>
                     </ul>
                 </li>
 

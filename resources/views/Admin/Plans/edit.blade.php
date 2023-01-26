@@ -19,6 +19,9 @@
                 <div class="row">
                     <x-text name="name" columns="6" label="Nombre del Plan" required="true"
                         placeholder="Ingrese su plan aquí..." value="{{ $plan->name }}" />
+                    <x-text type="number" name="quantity" columns="6" label="Cantidad de Productos" required="true"
+                        placeholder="Ingrese la cantidad de productos aquí..." value="{{ $plan->quantity }}" />
+
                 </div>
             </div>
 

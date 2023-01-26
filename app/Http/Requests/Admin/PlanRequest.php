@@ -25,14 +25,17 @@ class PlanRequest extends FormRequest
     {
         return [
             'name' => 'required|max:120',
+            'quantity' => 'required|max:1200000',
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required'                   => 'El campo nombre es obligatorio',
-            'name.max'                        => 'El campo nombre no debe contener mas de 120 caracteres',
+            'name.required'     => 'El campo nombre es obligatorio',
+            'name.max'          => 'El campo nombre no debe contener mas de 120 caracteres',
+            'quantity.required' => 'El campo cantidad es obligatorio',
+            'quantity.max'      => 'El campo cantidad debe ser menor a 1200000',
         ];
     }
 }

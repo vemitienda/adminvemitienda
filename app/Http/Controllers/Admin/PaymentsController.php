@@ -75,44 +75,27 @@ class PaymentsController extends Controller
      */
     public function store(PaymentRequest $request)
     {
-        $planUsers = PlanUser::query()
-            ->where('user_id', request()->user_id)
-            ->where('plan_id', request()->plan_id)
+        $user_id = request()->user_id;
+        $months = request()->months;
+        $pagado = 1;
+        $premium = Plan::where('name', 'Plan Premium')->first();
+        $plan_id = $premium->id;
+        // buscar si el usuario tiene un plan activo
+        $planActivo = PlanUser::query()
+            ->where('user_id', $user_id)
             ->where('activo', 1)
-            ->orderBy('id', 'desc')
             ->first();
 
-        if (@$planUsers) { //Hago el pago sobre este campo, sino creo uno nuevo
+        if (!is_null($planActivo)) {
+            //la fecha de inicio será un día después del último pago y a partir de ahí se calcula la fecha de fin
+            $ultimoPago = Payment::where('user_id', $user_id)->where('pagado', 1)->orderBy('id', 'desc')->first();
+            $fechaInicio = Carbon::parse($ultimoPago->end_date)->addDays(1)->format('Y-m-d') . ' 00:00:00';
+            $fechaFin = $fechaInicio->addMonths($months)->format('Y-m-d') . ' 23:59:59';
+            $payment=Payment::create([
 
-            $payment = Payment::create([
-                'plan_user_id' => $planUsers->id,
-                'start_date' => request()->start_date,
-                'end_date' => request()->end_date,
-                'paid_out' => request()->paid_out
             ]);
-
-            $payment->save();
-
-            return redirect()->route('payments.index');
-        } else { // debo crear el plan al usuario y asignar el pago.
-            // Esta situación pasará cuando un usuario quiere pagar antes del vencimiento del plan
-
-            $planUser = PlanUser::create([
-                'plan_id' => request()->plan_id,
-                'user_id' => request()->user_id,
-                'activo' => 1
-            ]);
-
-            $planUser->save();
-
-            $payment = Payment::create([
-                'plan_user_id' => $planUser->id,
-                'start_date' => request()->start_date,
-                'end_date' => request()->end_date,
-                'paid_out' => request()->paid_out
-            ]);
-
-            return redirect()->route('payments.index');
+        } else {
+            //la fecha de inicio será la fecha actual y a partir de ahí se calcula la fecha de fin
         }
     }
 

@@ -21,7 +21,8 @@ class PlansController extends Controller
         $datos['infoData'] = Plan::paginate(9);
 
         $datos['nombreColumnas'] = collect([
-            'Nombre' => 'name'
+            'Nombre' => 'name',
+            'Cantidad' => 'quantity'
         ]);
 
         $datos['token'] = csrf_token();
@@ -85,12 +86,12 @@ class PlansController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PlanRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $plan = Plan::find($id);
-        $plan->name        = request()->name;
+        $plan->name     = request()->name;
+        $plan->quantity = request()->quantity;
         $plan->save();
-
         return redirect()->route('plans.index');
     }
 

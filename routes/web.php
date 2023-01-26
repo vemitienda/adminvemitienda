@@ -36,8 +36,6 @@ Route::get('/pruebas/{quantity}', [PruebasController::class, 'sumarDias'])->name
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('usuarios', UsersController::class);
     Route::resource('plans', PlansController::class);
-    Route::resource('services', ServicesController::class);
-    Route::resource('planservices', PlanServicesController::class);
     Route::resource('planusers', PlanUsersController::class);
     Route::resource('paymentmethods', PaymentMethodsController::class);
     Route::resource('payments', PaymentsController::class);

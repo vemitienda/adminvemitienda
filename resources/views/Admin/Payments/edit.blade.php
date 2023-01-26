@@ -17,20 +17,8 @@
             <input type="hidden" name="_method" value="put">
             <div class="card-body">
                 <div class="row">
-                    <x-select disabled :selected="$payment->user_id" columns=6 label="Usuario" required=true name="user_id"
-                        :datos="@$users" />
-
-                    <x-select disabled :selected="$payment->plan_id" columns=3 label="Plan" required=true name="plan_id"
-                        :datos="@$plans" />
-
-                    <x-select :selected="$payment->pago" columns=3 label="Pagado" required=true name="paid_out"
-                        :datos="@$pagado" />
-
-                    <x-text class="datepicker" value="{{ $payment->inicio }}" type="text" columns=3 label='Inicio'
-                        required="true" name="start_date" />
-
-                    <x-text class="datepicker" value="{{ $payment->fin }}" type="text" columns=3 label='Fin' required="true"
-                        name="end_date" />
+                    <x-select disabled :selected="$payment->user_id" columns=6 label="Usuario" required=true
+                        name="user_id" :datos="@$users" />
                 </div>
             </div>
 
@@ -43,9 +31,9 @@
 @endsection
 @section('js')
 <script>
-$('.datepicker').datepicker({
-format: 'mm/dd/yyyy',
-startDate: '-3d'
-});
+    $('.datepicker').datepicker({
+            format: 'mm/dd/yyyy',
+            startDate: '-3d'
+        });
 </script>
 @endsection

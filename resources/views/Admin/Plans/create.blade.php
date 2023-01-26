@@ -17,8 +17,10 @@
             @csrf()
             <div class="card-body">
                 <div class="row">
-                    <x-text value="Plan x" name="name" columns="6" label="Nombre del Plan" required="true"
+                    <x-text name="name" columns="6" label="Nombre del Plan" required="true"
                         placeholder="Ingrese su plan aquí..." />
+                    <x-text type="number" name="quantity" columns="6" label="Cantidad de productos" required="true"
+                        placeholder="Ingrese la cantidad de productos aquí..." />
                 </div>
             </div>
 
