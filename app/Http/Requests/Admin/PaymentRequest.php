@@ -23,10 +23,11 @@ class PaymentRequest extends FormRequest
      */
     public function rules()
     {
-        info("Pagado");
-        info($this->pagado);
         $datos = [
-            'user_id' => 'required'
+            'user_id' => 'required',
+            'months'  => 'required',
+            'payment_method_id' => 'required',
+            'reference_number' => 'required',
         ];
 
         return $datos;
@@ -35,7 +36,10 @@ class PaymentRequest extends FormRequest
     public function messages()
     {
         return [
-            'user_id.required'    => 'Selecciona un usuario'
+            'user_id.required' => 'Selecciona un usuario',
+            'months.required'  => 'Selecciona la cantidad de meses a pagar',
+            'payment_method_id.required'  => 'Selecciona el método de pago',
+            'reference_number.required'  => 'Ingrese el nro de referencia',
         ];
     }
 }

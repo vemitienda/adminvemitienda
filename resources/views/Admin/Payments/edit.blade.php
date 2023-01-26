@@ -19,6 +19,7 @@
                 <div class="row">
                     <x-select disabled :selected="$payment->user_id" columns=6 label="Usuario" required=true
                         name="user_id" :datos="@$users" />
+                    <x-select :selected="$payment->quantity_months" columns=6 label="Cantidad de meses a pagar" required=true name="months" :datos="@$months" />
                 </div>
             </div>
 

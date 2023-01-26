@@ -6,6 +6,8 @@ use App\Helpers\Fechas;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PaymentRequest;
 use App\Models\Payment;
+use App\Models\PaymentDetails;
+use App\Models\PaymentMethod;
 use App\Models\Plan;
 use App\Models\PlanUser;
 use App\User;
@@ -17,12 +19,28 @@ class PaymentsController extends Controller
 {
 
     private $pagado;
+    private $months;
 
     public function __construct()
     {
         $this->pagado = [
             (object)['id' => 1, 'label' => 'Pagado'],
             (object)['id' => 0, 'label' => 'Por Pagar']
+        ];
+        $this->months = [
+            (object)['id' => 1, 'label' => 1],
+            (object)['id' => 2, 'label' => 2],
+            (object)['id' => 3, 'label' => 3],
+            (object)['id' => 4, 'label' => 4],
+            (object)['id' => 5, 'label' => 5],
+            (object)['id' => 6, 'label' => 6],
+            (object)['id' => 7, 'label' => 7],
+            (object)['id' => 8, 'label' => 8],
+            (object)['id' => 9, 'label' => 9],
+            (object)['id' => 10, 'label' => 10],
+            (object)['id' => 11, 'label' => 11],
+            (object)['id' => 12, 'label' => 12],
+            (object)['id' => 24, 'label' => 24],
         ];
     }
     /**
@@ -37,14 +55,11 @@ class PaymentsController extends Controller
         $datos['infoData'] = Payment::select([
             'payments.id',
             'users.email',
-            'plans.name as plan',
             'payments.start_date as inicio',
             'payments.end_date as fin',
             DB::raw("if(paid_out=1,'Pagado','...') as pagado")
         ])
-            ->leftJoin('plan_users', 'payments.plan_user_id', '=', 'plan_users.id')
-            ->leftJoin('users', 'plan_users.user_id', '=', 'users.id')
-            ->leftJoin('plans', 'plan_users.plan_id', '=', 'plans.id')
+            ->leftJoin('users', 'payments.user_id', '=', 'users.id')
             ->paginate(9);
 
         $datos['token'] = csrf_token();
@@ -63,7 +78,8 @@ class PaymentsController extends Controller
     {
         $data['users'] = User::select('id', 'email as label')->get();
         $data['plans'] = Plan::select('id', 'name as label')->get();
-        $data['pagado'] = $this->pagado;
+        $data['paymentmethods'] = PaymentMethod::select('id', 'name as label')->get();
+        $data['months'] = $this->months;
         return view('Admin.Payments.create', $data);
     }
 
@@ -75,28 +91,59 @@ class PaymentsController extends Controller
      */
     public function store(PaymentRequest $request)
     {
-        $user_id = request()->user_id;
-        $months = request()->months;
+        $user_id = (int)request()->user_id;
+        $months = (int)request()->months;
         $pagado = 1;
-        $premium = Plan::where('name', 'Plan Premium')->first();
+        $premium = Plan::where('name', 'Premium')->first();
         $plan_id = $premium->id;
         // buscar si el usuario tiene un plan activo
         $planActivo = PlanUser::query()
             ->where('user_id', $user_id)
+            ->where('plan_id', $plan_id)
             ->where('activo', 1)
             ->first();
 
         if (!is_null($planActivo)) {
             //la fecha de inicio será un día después del último pago y a partir de ahí se calcula la fecha de fin
-            $ultimoPago = Payment::where('user_id', $user_id)->where('pagado', 1)->orderBy('id', 'desc')->first();
-            $fechaInicio = Carbon::parse($ultimoPago->end_date)->addDays(1)->format('Y-m-d') . ' 00:00:00';
-            $fechaFin = $fechaInicio->addMonths($months)->format('Y-m-d') . ' 23:59:59';
-            $payment=Payment::create([
+            $ultimoPago = Payment::where('user_id', $user_id)->where('paid_out', 1)->orderBy('id', 'desc')->first();
 
-            ]);
+            if ($ultimoPago) {
+                $fechaInicio = Carbon::parse($ultimoPago->end_date)->addDays(1)->format('Y-m-d') . ' 00:00:00';
+                $fechaFin = Carbon::parse($ultimoPago->end_date)->addMonths($months)->format('Y-m-d') . ' 23:59:59';
+            } else {
+                $fechaInicio = Carbon::parse(now());
+                $fechaFin = Carbon::parse(now())->addMonths($months);
+            }
         } else {
-            //la fecha de inicio será la fecha actual y a partir de ahí se calcula la fecha de fin
+            // se le asigna el plan premium y la fecha de inicio será la fecha actual y a partir de ahí se calcula la fecha de fin
+            $planUser = PlanUser::create([
+                'user_id' => $user_id,
+                'plan_id' => $plan_id,
+                'activo' => 1
+            ]);
+            $fechaInicio = Carbon::parse(now());
+            $fechaFin = Carbon::parse(now())->addMonths($months);
         }
+
+        $inserts = [
+            'user_id' => $user_id,
+            'quantity_months' => $months,
+            'start_date' => $fechaInicio,
+            'end_date' => $fechaFin,
+            'paid_out' => 1,
+        ];
+
+        $payment = Payment::create($inserts);
+        $payment->save();
+
+        PaymentDetails::create([
+            'payment_id' => $payment->id,
+            'payment_method_id' => request()->payment_method_id,
+            'reference_number' => request()->reference_number,
+            'verified' => 1
+        ]);
+
+        return redirect()->route('payments.index');
     }
 
     /**
@@ -120,19 +167,17 @@ class PaymentsController extends Controller
     {
         $data['users'] = User::select('id', 'email as label')->get();
         $data['plans'] = Plan::select('id', 'name as label')->get();
-        $data['pagado'] = $this->pagado;
+        $data['months'] = $this->months;
 
         $data['payment'] = Payment::select([
             'payments.id as id',
+            'payments.quantity_months',
             'users.id as user_id',
-            'plans.id as plan_id',
             DB::raw("DATE_FORMAT(payments.start_date,'%d-%m-%Y') as inicio"),
             DB::raw("DATE_FORMAT(payments.end_date,'%d-%m-%Y') as fin"),
             'paid_out as pago'
         ])
-            ->leftJoin('plan_users', 'payments.plan_user_id', '=', 'plan_users.id')
             ->leftJoin('users', 'plan_users.user_id', '=', 'users.id')
-            ->leftJoin('plans', 'plan_users.plan_id', '=', 'plans.id')
             ->where('payments.id', $id)
             ->first();
 

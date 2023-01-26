@@ -30,7 +30,6 @@
             <thead>
                 <tr>
                     <th>Usuario</th>
-                    <th>Plan</th>
                     <th>Inicio</th>
                     <th>Fin</th>
                     <th>Pagado</th>
@@ -41,7 +40,6 @@
                 @forelse ($data['infoData'] as $item)
                 <tr>
                     <td>{{ $item->email }}</td>
-                    <td>{{ $item->plan }}</td>
                     <td>{{ $item->inicio }}</td>
                     <td>{{ $item->fin }}</td>
                     <td>
