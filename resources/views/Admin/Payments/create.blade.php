@@ -19,7 +19,8 @@
                 <div class="row">
                     <x-select class="select2" columns=6 label="Usuario" required=true name="user_id" :datos="@$users" />
                     <x-select columns=6 label="Método de Pago" required=true name="payment_method_id" :datos="@$paymentmethods" />
-                    <x-select columns=6 label="Cantidad de meses a pagar" required=true name="months" :datos="@$months" />
+                    <x-select columns=3 label="Cantidad de meses a pagar" required=true name="months" :datos="@$months" />
+                    <x-text columns=3 label="Cantidad recibida" required=true name="price" small="Ej: 100,00" />
                     <x-text columns=6 label="Nro de Transacción" required=true name="reference_number" />
                 </div>
             </div>

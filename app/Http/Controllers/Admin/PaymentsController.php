@@ -140,7 +140,8 @@ class PaymentsController extends Controller
             'payment_id' => $payment->id,
             'payment_method_id' => request()->payment_method_id,
             'reference_number' => request()->reference_number,
-            'verified' => 1
+            'verified' => 1,
+            'price' => request()->price
         ]);
 
         return redirect()->route('payments.index');
@@ -165,23 +166,7 @@ class PaymentsController extends Controller
      */
     public function edit($id)
     {
-        $data['users'] = User::select('id', 'email as label')->get();
-        $data['plans'] = Plan::select('id', 'name as label')->get();
-        $data['months'] = $this->months;
 
-        $data['payment'] = Payment::select([
-            'payments.id as id',
-            'payments.quantity_months',
-            'users.id as user_id',
-            DB::raw("DATE_FORMAT(payments.start_date,'%d-%m-%Y') as inicio"),
-            DB::raw("DATE_FORMAT(payments.end_date,'%d-%m-%Y') as fin"),
-            'paid_out as pago'
-        ])
-            ->leftJoin('users', 'plan_users.user_id', '=', 'users.id')
-            ->where('payments.id', $id)
-            ->first();
-
-        return view('Admin.Payments.edit', $data);
     }
 
     /**
@@ -194,13 +179,6 @@ class PaymentsController extends Controller
     public function update(Request $request, $id)
     {
 
-        $payment             = Payment::find($id);
-        $payment->paid_out   = request()->paid_out;
-        $payment->start_date = Carbon::parse(request()->start_date . ' 00:00:00')->format('Y-m-d H:i:s');
-        $payment->end_date   = Carbon::parse(request()->end_date . ' 23:59:59')->format('Y-m-d H:i:s');
-        $payment->save();
-
-        return redirect()->route('payments.index');
     }
 
     /**

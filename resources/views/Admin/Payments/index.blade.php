@@ -58,20 +58,6 @@
                                     Opciones
                                 </a>
                                 <div class="dropdown-menu" style="">
-
-
-                                    <a class="dropdown-item" href="{{ route('payments.edit',$item->id) }}"><i
-                                            class="fa fa-edit"></i>
-                                        Editar</a>
-
-
-                                    <a class="dropdown-item" href="{{ route('payments.edit',$item->id) }}"><i
-                                            class="fa fa-eye"></i>
-                                        Ver datos</a>
-
-
-                                    <div class="dropdown-divider"></div>
-
                                     <form class="formEliminar" data-nombre="{{ $item->label }}"
                                         action="{{ route('payments.destroy', $item->id) }}" method="post">
                                         <button class="dropdown-item" type="submit"><i class="fa fa-trash"></i>

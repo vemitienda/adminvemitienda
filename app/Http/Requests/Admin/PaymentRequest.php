@@ -28,6 +28,7 @@ class PaymentRequest extends FormRequest
             'months'  => 'required',
             'payment_method_id' => 'required',
             'reference_number' => 'required',
+            'price' => 'required',
         ];
 
         return $datos;
@@ -40,6 +41,7 @@ class PaymentRequest extends FormRequest
             'months.required'  => 'Selecciona la cantidad de meses a pagar',
             'payment_method_id.required'  => 'Selecciona el método de pago',
             'reference_number.required'  => 'Ingrese el nro de referencia',
+            'price.required'  => 'Ingrese la cantidad recibida',
         ];
     }
 }
