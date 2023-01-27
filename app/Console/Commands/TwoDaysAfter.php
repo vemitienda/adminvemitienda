@@ -12,7 +12,7 @@ class TwoDaysAfter extends Command
      *
      * @var string
      */
-    protected $signature = 'twoDays:after';
+    protected $signature = 'twoDaysAfter';
 
     /**
      * The console command description.
@@ -38,6 +38,7 @@ class TwoDaysAfter extends Command
      */
     public function handle()
     {
+        info("Corrió");
         return CRON::twoDaysAfter();
     }
 }

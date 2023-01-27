@@ -27,7 +27,6 @@ class SendEmailJob implements ShouldQueue
      */
     public function __construct($parametros)
     {
-        info($parametros);
         $this->parametros = $parametros;
         $this->queue      = 'emails';
     }

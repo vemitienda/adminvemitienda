@@ -15,10 +15,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('fiveDays:after')->dailyAt('00:00');
-        $schedule->command('threeDays:before')->dailyAt('08:00');
+        $schedule->command('fiveDaysAfter')->dailyAt('00:00');
+        $schedule->command('threeDaysBefore')->dailyAt('08:00');
         // $schedule->command('twoDays:after')->dailyAt('10:00');
-        $schedule->command('twoDays:after')->everyThreeMinutes();
+        $schedule->command('twoDaysAfter')->everyMinute(); //Esto es para probar en local
     }
 
     /**
@@ -31,5 +31,10 @@ class Kernel extends ConsoleKernel
         $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
+    }
+
+    protected function scheduleTimezone()
+    {
+        return 'America/Caracas';
     }
 }

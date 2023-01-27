@@ -12,7 +12,7 @@ class ThreeDaysBefore extends Command
      *
      * @var string
      */
-    protected $signature = 'threeDays:before';
+    protected $signature = 'threeDaysBefore';
 
     /**
      * The console command description.

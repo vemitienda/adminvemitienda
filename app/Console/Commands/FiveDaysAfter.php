@@ -12,7 +12,7 @@ class FiveDaysAfter extends Command
      *
      * @var string
      */
-    protected $signature = 'fiveDays:after';
+    protected $signature = 'fiveDaysAfter';
 
     /**
      * The console command description.
