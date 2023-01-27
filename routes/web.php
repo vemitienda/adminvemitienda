@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\CRON;
 use App\Http\Controllers\Admin\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UsersController;

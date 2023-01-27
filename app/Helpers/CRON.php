@@ -1,0 +1,81 @@
+<?php
+
+namespace App\Helpers;
+
+use App\Jobs\SendEmailJob;
+use App\Models\Payment;
+use App\Models\PlanUser;
+use App\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+
+class CRON
+{
+    static function threeDaysBefore()
+    {
+        $threDaysAfter = Carbon::parse(now())->addDays(3)->format('Y-m-d');
+        /* Selecciono los planes cuya end_date es igual a threDaysAfter */
+        $userPaymentsArray = Payment::query()
+            ->where('end_date', $threDaysAfter)
+            ->where('paid_out', 0)
+            ->pluck('user_id');
+
+        if (@count($userPaymentsArray) > 0) {
+            $emails = User::whereIn('id', $userPaymentsArray)->pluck('email', 'name');
+            foreach ($emails as $name => $email) {
+                //Envío el correo recordatorio a cada email
+                $parametros['name'] = $name;
+                $parametros['destinatario'] = $email;
+                $parametros['type'] = 'RecordarPago';
+                $parametros['subject'] = 'Recordatorio de vencimiento próximo';
+                $parametros['mensaje'] = 'Le hacemos un recordatorio amistoso, de que su plan vencerá dentro de 3 días.';
+
+                dispatch(new SendEmailJob($parametros));
+            }
+        }
+    }
+
+    static function twoDaysAfter()
+    {
+        $threDaysAfter = Carbon::parse(now())->subDays(2)->format('Y-m-d');
+        /* Selecciono los planes cuya end_date es igual a threDaysAfter */
+        $userPaymentsArray = Payment::query()
+            ->where('end_date', $threDaysAfter)
+            ->where('paid_out', 0)
+            ->pluck('user_id');
+
+        if (@count($userPaymentsArray) > 0) {
+            $emails = User::whereIn('id', $userPaymentsArray)->pluck('email', 'name');
+            foreach ($emails as $name => $email) {
+                //Envío el correo recordatorio a cada email
+                $parametros['name'] = $name;
+                $parametros['destinatario'] = $email;
+                $parametros['type'] = 'RecordarPago';
+                $parametros['subject'] = 'Recordatorio de pago vencido';
+                $parametros['mensaje'] = 'Le hacemos un recordatorio amistoso, de que su plan venció hace 2 días.';
+
+                dispatch(new SendEmailJob($parametros));
+            }
+        }
+    }
+
+    static function fiveDaysAfter()
+    {
+        $threDaysAfter = Carbon::parse(now())->subDays(5)->format('Y-m-d');
+        /* Selecciono los planes cuya end_date es igual a threDaysAfter */
+        $userPaymentsArray = Payment::query()
+            ->where('end_date', $threDaysAfter)
+            ->where('paid_out', 0)
+            ->pluck('user_id');
+
+        if (@count($userPaymentsArray) > 0) {
+            foreach ($userPaymentsArray as $user_id) {
+                // A éstos usuarios se les quita el plan
+                $planUser = PlanUser::where('user_id', $user_id)->first();
+                $planUser->plan_id = 1;
+                $planUser->activo = 1;
+                $planUser->save();
+            }
+        }
+    }
+}

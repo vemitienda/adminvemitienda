@@ -15,7 +15,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('fiveDays:after')->dailyAt('00:00');
+        $schedule->command('threeDays:before')->dailyAt('08:00');
+        // $schedule->command('twoDays:after')->dailyAt('10:00');
+        $schedule->command('twoDays:after')->everyThreeMinutes();
     }
 
     /**
@@ -25,7 +28,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }
