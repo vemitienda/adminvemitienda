@@ -17,8 +17,8 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('fiveDaysAfter')->dailyAt('00:00');
         $schedule->command('threeDaysBefore')->dailyAt('08:00');
-        // $schedule->command('twoDays:after')->dailyAt('10:00');
-        $schedule->command('twoDaysAfter')->everyMinute(); //Esto es para probar en local
+        $schedule->command('twoDays:after')->dailyAt('10:00');
+        // $schedule->command('twoDaysAfter')->everyMinute(); //Esto es para probar en local
     }
 
     /**

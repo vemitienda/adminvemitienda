@@ -38,7 +38,6 @@ class TwoDaysAfter extends Command
      */
     public function handle()
     {
-        info("Corrió");
         return CRON::twoDaysAfter();
     }
 }
