@@ -18,19 +18,32 @@ class CRON
         $userPaymentsArray = Payment::query()
             ->where('end_date', $threDaysAfter)
             ->where('paid_out', 0)
-            ->pluck('user_id');
+            ->pluck('email', 'name');
+
+        $userPagosAdelantadosArray = Payment::query()
+            ->where('start_date', '>', Carbon::parse(now())->format('Y-m-d H:i:s'))
+            ->where('paid_out', 1)
+            ->pluck('email', 'name');
 
         if (@count($userPaymentsArray) > 0) {
-            $emails = User::whereIn('id', $userPaymentsArray)->pluck('email', 'name');
-            foreach ($emails as $name => $email) {
-                //Envío el correo recordatorio a cada email
-                $parametros['name'] = $name;
-                $parametros['destinatario'] = $email;
-                $parametros['type'] = 'RecordarPago';
-                $parametros['subject'] = 'Recordatorio de vencimiento próximo';
-                $parametros['mensaje'] = 'Le hacemos un recordatorio amistoso, de que su plan vencerá dentro de 3 días.';
 
-                dispatch(new SendEmailJob($parametros));
+            $users = User::query()
+                ->whereIn('id', $userPaymentsArray)
+                ->get();
+
+            foreach ($users as $user) {
+
+                if (!in_array($user->id, $userPagosAdelantadosArray)) {
+                    //Envío el correo recordatorio a los que tengan pagos pendientes y no tengan pagos adelantados
+                    $parametros['name'] = $user->name;
+                    $parametros['destinatario'] = $user->email;
+                    $parametros['type'] = 'RecordarPago';
+                    $parametros['subject'] = 'Recordatorio de vencimiento próximo';
+                    $parametros['mensaje'] = 'Le hacemos un recordatorio amistoso, de que su plan vencerá dentro de 3 días.';
+
+                    dispatch(new SendEmailJob($parametros));
+                }
+
             }
         }
     }
