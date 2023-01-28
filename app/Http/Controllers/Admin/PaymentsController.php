@@ -130,7 +130,7 @@ class PaymentsController extends Controller
             'quantity_months' => $months,
             'start_date' => $fechaInicio,
             'end_date' => $fechaFin,
-            'paid_out' => 1,
+            'paid_out' => true,
         ];
 
         $payment = Payment::create($inserts);
