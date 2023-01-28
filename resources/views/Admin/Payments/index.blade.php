@@ -39,11 +39,11 @@
             <tbody>
                 @forelse ($data['infoData'] as $item)
                 <tr>
-                    <td>{{ $item }} {{ $item->email }}</td>
+                    <td>{{ $item->email }}</td>
                     <td>{{ $item->inicio }}</td>
                     <td>{{ $item->fin }}</td>
                     <td>
-                    @if(@$item->pagado>0)
+                    @if(@$item->pagado=='Pagado')
                         <span class="badge bg-primary">Pagado</span>
                     @else
                         <span class="badge bg-warning">Pendiente</span>
