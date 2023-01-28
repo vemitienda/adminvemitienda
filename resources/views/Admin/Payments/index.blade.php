@@ -39,7 +39,7 @@
             <tbody>
                 @forelse ($data['infoData'] as $item)
                 <tr>
-                    <td>{{ $item->email }}</td>
+                    <td>{{ $item }} {{ $item->email }}</td>
                     <td>{{ $item->inicio }}</td>
                     <td>{{ $item->fin }}</td>
                     <td>
