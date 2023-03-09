@@ -13,12 +13,11 @@ class CRON
 {
     static function threeDaysBefore()
     {
-        info('ejecutó threeDaysBefore');
         $threDaysAfter = Carbon::parse(now())->addDays(3)->format('Y-m-d');
         /* Selecciono los planes cuya end_date es igual a threDaysAfter */
         $userPaymentsArray = Payment::query()
             ->where('end_date', $threDaysAfter)
-            ->where('paid_out', 0)
+            // ->where('paid_out', 0)
             ->pluck('id');
 
 
@@ -50,18 +49,6 @@ class CRON
 
     static function twoDaysAfter()
     {
-        info('ejecutó twoDaysAfter');
-
-        $parametros['name'] = "Luis Prueba";
-        $parametros['destinatario'] = "carneiroluis2@gmail.com";
-        $parametros['type'] = 'RecordarPago';
-        $parametros['subject'] = 'Recordatorio de vencimiento próximo';
-        $parametros['mensaje'] = 'Le hacemos un recordatorio amistoso, de que su plan vencerá dentro de 3 días.';
-info("Antes de disparar");
-dispatch(new SendEmailJob($parametros));
-info("Despues de disparar");
-
-
         $threDaysAfter = Carbon::parse(now())->subDays(2)->format('Y-m-d');
         /* Selecciono los planes cuya end_date es igual a threDaysAfter */
         $userPaymentsArray = Payment::query()
@@ -87,7 +74,6 @@ info("Despues de disparar");
 
     static function fiveDaysAfter()
     {
-        info('ejecutó fiveDaysAfter');
         $threDaysAfter = Carbon::parse(now())->subDays(5)->format('Y-m-d');
         /* Selecciono los planes cuya end_date es igual a threDaysAfter */
         $userPaymentsArray = Payment::query()
