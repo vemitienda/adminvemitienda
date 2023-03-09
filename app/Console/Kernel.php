@@ -15,9 +15,14 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('fiveDaysAfter')->dailyAt('00:00');
-        $schedule->command('threeDaysBefore')->dailyAt('08:00');
-        $schedule->command('twoDaysAfter')->dailyAt('10:00');
+        // $schedule->command('fiveDaysAfter')->dailyAt('00:00');
+        // $schedule->command('threeDaysBefore')->dailyAt('08:00');
+        // $schedule->command('twoDaysAfter')->dailyAt('10:00');
+        $schedule->command('fiveDaysAfter')->everyMinute();
+        $schedule->command('threeDaysBefore')->everyMinute();
+        $schedule->command('twoDaysAfter')->everyMinute();
+
+
         // $schedule->command('prueba')->everyMinute();
         // $schedule->command('twoDaysAfter')->everyMinute(); //Esto es para probar en local
     }
