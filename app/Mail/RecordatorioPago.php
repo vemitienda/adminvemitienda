@@ -33,6 +33,7 @@ class RecordatorioPago extends Mailable
      */
     public function build()
     {
+        info('Entro donde se llama la vista');
         return $this->view($this->vista)->with($this->datos);
     }
 }

@@ -12,7 +12,9 @@ class RecordarPago implements SendEmailInterface
     public function sendEmail($data)
     {
         try {
+            info('Iniciando el envio de email');
             Mail::to($data['destinatario'])->send(new RecordatorioPago($data));
+            info('Finalizando el envio de email');
         } catch (Exception $th) {
             return null;
         }
