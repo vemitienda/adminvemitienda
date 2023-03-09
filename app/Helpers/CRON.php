@@ -51,6 +51,16 @@ class CRON
     static function twoDaysAfter()
     {
         info('ejecutó twoDaysAfter');
+
+        $parametros['name'] = "Luis Prueba";
+        $parametros['destinatario'] = "carneiroluis2@gmail.com";
+        $parametros['type'] = 'RecordarPago';
+        $parametros['subject'] = 'Recordatorio de vencimiento próximo';
+        $parametros['mensaje'] = 'Le hacemos un recordatorio amistoso, de que su plan vencerá dentro de 3 días.';
+
+        dispatch(new SendEmailJob($parametros));
+
+
         $threDaysAfter = Carbon::parse(now())->subDays(2)->format('Y-m-d');
         /* Selecciono los planes cuya end_date es igual a threDaysAfter */
         $userPaymentsArray = Payment::query()
