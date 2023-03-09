@@ -96,19 +96,23 @@ class PlanUsersController extends Controller
             'users.email as user',
             'plans.name as plan',
             'plan_users.created_at',
+            'payments.start_date',
+            'payments.end_date',
             DB::raw("if(plan_users.activo=1,'Si','No') as activo"),
         ])
             ->leftJoin('plans', 'plan_users.plan_id', '=', 'plans.id')
             ->leftJoin('users', 'plan_users.user_id', '=', 'users.id')
-            ->where('user_id', $planUser->user_id)
-            ->orderBy('id', 'desc')
+            ->leftJoin('payments', 'users.id', '=', 'payments.user_id')
+            ->where('plan_users.user_id', $planUser->user_id)
+            ->orderBy('plan_users.id', 'desc')
             ->get();
 
         $datos['nombreColumnas'] = collect([
             'User'   => 'user',
             'Plan'   => 'plan',
             'Activo' => 'activo',
-            'Fecha' => 'created_at',
+            'Inicio' => 'start_date',
+            'Fin'    => 'end_date',
         ]);
 
         $datos['token'] = csrf_token();
