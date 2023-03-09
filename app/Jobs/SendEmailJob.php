@@ -38,9 +38,6 @@ class SendEmailJob implements ShouldQueue
      */
     public function handle()
     {
-        info('Entró a enviar');
-        info('parametros');
-        info($this->parametros);
         $estrategyClass = $this::STRATEGY[$this->parametros['type']];
         $estrategy = new $estrategyClass();
         $estrategy->sendEmail($this->parametros);

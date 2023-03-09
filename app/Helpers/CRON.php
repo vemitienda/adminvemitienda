@@ -60,7 +60,6 @@ class CRON
             $emails = User::whereIn('id', $userPaymentsArray)->pluck('email', 'name');
             foreach ($emails as $name => $email) {
                 //Envío el correo recordatorio a cada email
-                info('email: '.$email);
                 $parametros['name'] = $name;
                 $parametros['destinatario'] = $email;
                 $parametros['type'] = 'RecordarPago';
