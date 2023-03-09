@@ -13,12 +13,14 @@ class CRON
 {
     static function threeDaysBefore()
     {
+        info('ejecutó threeDaysBefore');
         $threDaysAfter = Carbon::parse(now())->addDays(3)->format('Y-m-d');
         /* Selecciono los planes cuya end_date es igual a threDaysAfter */
         $userPaymentsArray = Payment::query()
             ->where('end_date', $threDaysAfter)
             ->where('paid_out', 0)
             ->pluck('email', 'name');
+
 
         $userPagosAdelantadosArray = Payment::query()
             ->where('start_date', '>', Carbon::parse(now())->format('Y-m-d H:i:s'))
@@ -32,8 +34,7 @@ class CRON
                 ->get();
 
             foreach ($users as $user) {
-
-                if (!in_array($user->id, $userPagosAdelantadosArray)) {
+                if (!in_array($user->id, count($userPagosAdelantadosArray) > 0 ? $userPagosAdelantadosArray : [])) {
                     //Envío el correo recordatorio a los que tengan pagos pendientes y no tengan pagos adelantados
                     $parametros['name'] = $user->name;
                     $parametros['destinatario'] = $user->email;
@@ -43,13 +44,13 @@ class CRON
 
                     dispatch(new SendEmailJob($parametros));
                 }
-
             }
         }
     }
 
     static function twoDaysAfter()
     {
+        info('ejecutó twoDaysAfter');
         $threDaysAfter = Carbon::parse(now())->subDays(2)->format('Y-m-d');
         /* Selecciono los planes cuya end_date es igual a threDaysAfter */
         $userPaymentsArray = Payment::query()
@@ -74,6 +75,7 @@ class CRON
 
     static function fiveDaysAfter()
     {
+        info('ejecutó fiveDaysAfter');
         $threDaysAfter = Carbon::parse(now())->subDays(5)->format('Y-m-d');
         /* Selecciono los planes cuya end_date es igual a threDaysAfter */
         $userPaymentsArray = Payment::query()
