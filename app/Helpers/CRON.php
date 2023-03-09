@@ -55,7 +55,7 @@ class CRON
         /* Selecciono los planes cuya end_date es igual a threDaysAfter */
         $userPaymentsArray = Payment::query()
             ->where('end_date', $threDaysAfter)
-            ->where('paid_out', 0)
+            // ->where('paid_out', 0)
             ->pluck('user_id');
 
         if (@count($userPaymentsArray) > 0) {
@@ -81,7 +81,7 @@ class CRON
         /* Selecciono los planes cuya end_date es igual a threDaysAfter */
         $userPaymentsArray = Payment::query()
             ->where('end_date', $threDaysAfter)
-            ->where('paid_out', 0)
+            // ->where('paid_out', 0)
             ->pluck('user_id');
 
         if (@count($userPaymentsArray) > 0) {
