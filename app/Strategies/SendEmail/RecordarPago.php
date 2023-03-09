@@ -14,6 +14,8 @@ class RecordarPago implements SendEmailInterface
         try {
             Mail::to($data['destinatario'])->send(new RecordatorioPago($data));
         } catch (Exception $th) {
+            info('Entro en excepción de enviar email');
+            info($th);
             return null;
         }
     }
