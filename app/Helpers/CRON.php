@@ -19,13 +19,13 @@ class CRON
         $userPaymentsArray = Payment::query()
             ->where('end_date', $threDaysAfter)
             ->where('paid_out', 0)
-            ->pluck('email', 'name');
+            ->pluck('id');
 
 
         $userPagosAdelantadosArray = Payment::query()
             ->where('start_date', '>', Carbon::parse(now())->format('Y-m-d H:i:s'))
             ->where('paid_out', 1)
-            ->pluck('email', 'name');
+            ->pluck('id');
 
         if (@count($userPaymentsArray) > 0) {
 
