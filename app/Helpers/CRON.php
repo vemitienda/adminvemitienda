@@ -57,8 +57,9 @@ class CRON
         $parametros['type'] = 'RecordarPago';
         $parametros['subject'] = 'Recordatorio de vencimiento próximo';
         $parametros['mensaje'] = 'Le hacemos un recordatorio amistoso, de que su plan vencerá dentro de 3 días.';
-
-        dispatch(new SendEmailJob($parametros));
+info("Antes de disparar");
+dispatch(new SendEmailJob($parametros));
+info("Despues de disparar");
 
 
         $threDaysAfter = Carbon::parse(now())->subDays(2)->format('Y-m-d');
