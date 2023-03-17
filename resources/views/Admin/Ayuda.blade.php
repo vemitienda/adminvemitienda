@@ -11,11 +11,11 @@
         </div>
     </div>
     <!-- /.card-header -->
-    <div class="card-body">
+    <div class="card-body table-responsive">
         <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4">
             <div class="row">
                 <div class="col-sm-12">
-                    <table id="ayuda-table" class="table table-responsive table-bordered table-striped dataTable dtr-inline tabla-default" role="grid"
+                    <table id="ayuda-table" class="table table-bordered table-striped dataTable dtr-inline tabla-default" role="grid"
                         aria-describedby="datatable_info">
                         <thead>
                             <tr role="row">
