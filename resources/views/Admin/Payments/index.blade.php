@@ -26,7 +26,7 @@
                 </label>
             </form>
         </div>
-        <table class="table table-striped table-bordered w-100 tabla-payments">
+        <table class="table table-responsive table-striped table-bordered w-100 tabla-payments">
             <thead>
                 <tr>
                     <th>Usuario</th>

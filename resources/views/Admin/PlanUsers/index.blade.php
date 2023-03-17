@@ -26,7 +26,7 @@
                 </label>
             </form>
         </div>
-        <table class="table table-striped table-bordered w-100 tabla-planusers">
+        <table class="table table-responsive table-striped table-bordered w-100 tabla-planusers">
             <thead>
                 <tr>
                     @foreach ($data['nombreColumnas'] as $key=> $value)
