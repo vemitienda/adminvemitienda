@@ -20,6 +20,10 @@ class UsersController extends Controller
         $filtrar = request()->get('query');
 
         $datos['infoData'] = User::paginate(9);
+        $data['activos'] = User::query()
+            ->where('email_verified_at', '>', '2000-01-01 00:00:00')
+            ->where('id', '>', 31)
+            ->count();
 
         $datos['nombreColumnas'] = collect([
             'Nombre' => 'name',
