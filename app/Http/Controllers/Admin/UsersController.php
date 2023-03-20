@@ -22,13 +22,15 @@ class UsersController extends Controller
         $filtrar = request()->get('query');
 
         $datos['infoData'] = User::withCount('Products')->paginate(9);
-// return $datos['infoData'];
+        // return $datos['infoData'];
         $data['activos'] = User::query()
             ->where('email_verified_at', '>', '2000-01-01 00:00:00')
             ->where('id', '>', 31)
             ->count();
 
         $data['totalProductos'] = Product::count();
+
+        $data['usuariosConProductos'] = Product::groupBy('user_id')->get()->count();
 
         $datos['nombreColumnas'] = collect([
             'Nombre' => 'name',
