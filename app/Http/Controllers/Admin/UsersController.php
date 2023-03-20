@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UsuarioRequest;
+use App\Models\Product;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
@@ -19,16 +21,19 @@ class UsersController extends Controller
     {
         $filtrar = request()->get('query');
 
-        $datos['infoData'] = User::paginate(9);
+        $datos['infoData'] = User::withCount('Products')->paginate(9);
+// return $datos['infoData'];
         $data['activos'] = User::query()
             ->where('email_verified_at', '>', '2000-01-01 00:00:00')
             ->where('id', '>', 31)
             ->count();
 
+        $data['totalProductos'] = Product::count();
+
         $datos['nombreColumnas'] = collect([
             'Nombre' => 'name',
             'Email' => 'email',
-            'Tipo' => 'rol'
+            'n° Productos' => 'products_count'
         ]);
 
         $datos['token'] = csrf_token();
