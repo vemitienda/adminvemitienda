@@ -99,11 +99,11 @@ class PaymentsController extends Controller
         // buscar si el usuario tiene un plan activo
         $planActivo = PlanUser::query()
             ->where('user_id', $user_id)
-            ->where('plan_id', $plan_id)
+            // ->where('plan_id', $plan_id)
             ->where('activo', 1)
             ->first();
 
-        if (!is_null($planActivo)) {
+        if (!is_null($planActivo) && $planActivo->plan_id > 1) {
             //la fecha de inicio será un día después del último pago y a partir de ahí se calcula la fecha de fin
             $ultimoPago = Payment::where('user_id', $user_id)->where('paid_out', 1)->orderBy('id', 'desc')->first();
 
@@ -116,11 +116,16 @@ class PaymentsController extends Controller
             }
         } else {
             // se le asigna el plan premium y la fecha de inicio será la fecha actual y a partir de ahí se calcula la fecha de fin
-            $planUser = PlanUser::create([
-                'user_id' => $user_id,
-                'plan_id' => $plan_id,
-                'activo' => 1
-            ]);
+            if (!is_null($planActivo)) {
+                $planActivo->plan_id = $plan_id;
+                $planActivo->save();
+            } else {
+                $planUser = PlanUser::create([
+                    'user_id' => $user_id,
+                    'plan_id' => $plan_id,
+                    'activo' => 1
+                ]);
+            }
             $fechaInicio = Carbon::parse(now());
             $fechaFin = Carbon::parse(now())->addMonths($months);
         }
@@ -166,7 +171,6 @@ class PaymentsController extends Controller
      */
     public function edit($id)
     {
-
     }
 
     /**
@@ -178,7 +182,6 @@ class PaymentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-
     }
 
     /**
