@@ -8,8 +8,8 @@
                 <h5 class="text-default"><i class="fa fa-user-circle"></i> Planes actuales de Usuarios</h5>
             </div>
             <div class="col-6 text-right">
-                <a href="{{ route('planusers.create') }}" class="btn btn-dark btn-xs"><i class="fa fa-plus-circle"></i>
-                    Agregar</a>
+                {{-- <a href="{{ route('planusers.create') }}" class="btn btn-dark btn-xs"><i class="fa fa-plus-circle"></i>
+                    Agregar</a> --}}
             </div>
         </div>
     </div>

@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\PlanUserRequest;
 use App\Models\Plan;
 use App\Models\PlanUser;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -33,12 +34,21 @@ class PlanUsersController extends Controller
 
         $datos['infoData'] = PlanUser::select([
             'plan_users.id',
+            'users.name as name',
             'users.email as user',
             'plans.name as plan',
+            'plan_users.start_date as start_date',
+            'plan_users.end_date as end_date',
             DB::raw("if(plan_users.activo=1,'Si','No') as activo"),
         ])
             ->leftJoin('plans', 'plan_users.plan_id', '=', 'plans.id')
             ->leftJoin('users', 'plan_users.user_id', '=', 'users.id')
+            ->when($filtrar, function ($q) use ($filtrar) {
+                $q->where('users.name', 'like', '%' . $filtrar . '%');
+                $q->orWhere('users.email', 'like', '%' . $filtrar . '%');
+                $q->orWhere('plans.name', 'like', '%' . $filtrar . '%');
+                return $q;
+            })
             ->orderBy('id', 'desc')
             ->groupBy('user') //Para usar esto, se colocó 'strict' => false en config/database.php
             ->paginate(9);
@@ -47,6 +57,8 @@ class PlanUsersController extends Controller
             'User'   => 'user',
             'Plan'   => 'plan',
             'Activo' => 'activo',
+            'Inicio' => 'start_date',
+            'Fin' => 'end_date',
         ]);
 
         $datos['token'] = csrf_token();
@@ -75,12 +87,14 @@ class PlanUsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PlanUserRequest $request)
-    {
-        $planUser = PlanUser::create(request()->all());
-        $planUser->save();
-        return redirect()->route('planusers.index');
-    }
+    // public function store(PlanUserRequest $request)
+    // {
+    //     $request['start_date'] = Carbon::parse(request()->start_date)->format('Y-m-d');
+    //     $request['end_date'] = Carbon::parse(request()->end_date)->format('Y-m-d');
+    //     $planUser = PlanUser::create($request->all());
+    //     $planUser->save();
+    //     return redirect()->route('planusers.index');
+    // }
 
     /**
      * Display the specified resource.
@@ -96,8 +110,8 @@ class PlanUsersController extends Controller
             'users.email as user',
             'plans.name as plan',
             'plan_users.created_at',
-            'payments.start_date',
-            'payments.end_date',
+            'plan_users.start_date',
+            'plan_users.end_date',
             DB::raw("if(plan_users.activo=1,'Si','No') as activo"),
         ])
             ->leftJoin('plans', 'plan_users.plan_id', '=', 'plans.id')
@@ -150,6 +164,8 @@ class PlanUsersController extends Controller
         $planUser->user_id = request()->user_id;
         $planUser->plan_id = request()->plan_id;
         $planUser->activo  = request()->activo;
+        $planUser->start_date  = Carbon::parse(request()->start_date)->format('Y-m-d');
+        $planUser->end_date  = Carbon::parse(request()->end_date)->format('Y-m-d');
         $planUser->save();
 
         return redirect()->route('planusers.index');

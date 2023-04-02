@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PlanUserRequest extends FormRequest
 {
@@ -26,7 +27,6 @@ class PlanUserRequest extends FormRequest
         return [
             'user_id' => 'required',
             'plan_id' => 'required',
-
         ];
     }
 

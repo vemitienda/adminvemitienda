@@ -21,7 +21,13 @@ class UsersController extends Controller
     {
         $filtrar = request()->get('query');
 
-        $datos['infoData'] = User::withCount('Products')->paginate(9);
+        $datos['infoData'] = User::withCount('Products')
+            ->when($filtrar, function ($q) use ($filtrar) {
+                $q->where('name', 'like', '%' . $filtrar . '%');
+                $q->orWhere('email', 'like', '%' . $filtrar . '%');
+                return $q;
+            })
+            ->paginate(9);
         // return $datos['infoData'];
         $data['activos'] = User::query()
             ->where('email_verified_at', '>', '2000-01-01 00:00:00')
