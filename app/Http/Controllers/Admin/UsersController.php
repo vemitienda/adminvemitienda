@@ -41,7 +41,8 @@ class UsersController extends Controller
         $datos['nombreColumnas'] = collect([
             'Nombre' => 'name',
             'Email' => 'email',
-            'n° Productos' => 'products_count'
+            'n° Productos' => 'products_count',
+            'Alta'=>'created_at'
         ]);
 
         $datos['token'] = csrf_token();
