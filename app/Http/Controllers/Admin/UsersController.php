@@ -27,6 +27,7 @@ class UsersController extends Controller
                 $q->orWhere('email', 'like', '%' . $filtrar . '%');
                 return $q;
             })
+            ->orderBy('id', 'desc')
             ->paginate(9);
         // return $datos['infoData'];
         $data['activos'] = User::query()
@@ -42,7 +43,7 @@ class UsersController extends Controller
             'Nombre' => 'name',
             'Email' => 'email',
             'n° Productos' => 'products_count',
-            'Alta'=>'created_at'
+            'Alta' => 'created_at'
         ]);
 
         $datos['token'] = csrf_token();
