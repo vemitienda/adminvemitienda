@@ -2,12 +2,9 @@
 
 namespace App\Helpers;
 
-use App\Jobs\SendEmailJob;
-use App\Models\Payment;
 use App\Models\PlanUser;
-use App\User;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
+
 
 class CRON
 {
@@ -23,7 +20,12 @@ class CRON
         $message = "Recordatorio de vencimiento próximo";
         $subject = "Le hacemos un recordatorio amistoso, de que su plan vencerá dentro de 3 días. Puede seguir probando la aplicación sin problemas";
 
-        $this->sendEmailsUsers($userPaymentsArray, $message, $subject);
+        try {
+            Emails::sendEmailsUsers($userPaymentsArray, $message, $subject);
+        } catch (\Throwable $th) {
+            info("Error enviando correo");
+            info($th);
+        }
     }
 
     static function twoDaysAfter()
@@ -37,7 +39,12 @@ class CRON
         $message = "Recordatorio de pago vencido";
         $subject = "Le hacemos un recordatorio amistoso, de que su plan venció hace 2 días. Puede seguir probando la aplicación por 2 días más";
 
-        $this->sendEmailsUsers($userPaymentsArray, $message, $subject);
+        try {
+            Emails::sendEmailsUsers($userPaymentsArray, $message, $subject);
+        } catch (\Throwable $th) {
+            info("Error enviando correo");
+            info($th);
+        }
     }
 
     static function fiveDaysAfter()
@@ -55,27 +62,6 @@ class CRON
                 $planUser->plan_id = 1;
                 $planUser->activo = 1;
                 $planUser->save();
-            }
-        }
-    }
-
-    public function sendEmailsUsers($userPaymentsArray, $message, $subject)
-    {
-        if (@count($userPaymentsArray) > 0) {
-
-            $users = User::query()
-                ->whereIn('id', $userPaymentsArray)
-                ->get();
-
-            foreach ($users as $user) {
-                //Envío el correo recordatorio a los que tengan pagos pendientes y no tengan pagos adelantados
-                $parametros['name'] = $user->name;
-                $parametros['destinatario'] = $user->email;
-                $parametros['type'] = 'RecordarPago';
-                $parametros['subject'] = $subject;
-                $parametros['mensaje'] = $message;
-
-                dispatch(new SendEmailJob($parametros));
             }
         }
     }
