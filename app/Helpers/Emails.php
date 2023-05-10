@@ -31,7 +31,7 @@ class Emails
     {
         if (@count($users) > 0) {
             foreach ($users as $user) {
-                info('Se envió email masivo a: ' . $user->email);
+                info('Se envió email masivo a: id=>' . $user->id . ' email=>' . $user->email);
                 $parametros['name'] = $user->name;
                 $parametros['company'] = $user->company;
                 $parametros['destinatario'] = $user->email;
