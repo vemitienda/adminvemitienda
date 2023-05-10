@@ -10,9 +10,7 @@ class SendEmailsController extends Controller
 {
     public function masivo()
     {
-        $arrayU = [13, 132];
         $users = User::with('company')
-            ->whereIn('id', $arrayU)
             ->get();
 
         $subject = "¿Necesitas ayuda?";
