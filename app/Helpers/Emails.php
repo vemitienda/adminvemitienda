@@ -36,7 +36,11 @@ class Emails
                 $parametros['destinatario'] = $user->email;
                 $parametros['type'] = 'Masivo';
                 $parametros['subject'] = $subject;
-                dispatch(new SendEmailJob($parametros));
+                try {
+                    dispatch(new SendEmailJob($parametros));
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
             }
         }
     }
