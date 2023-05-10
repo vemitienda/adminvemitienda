@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Strategies\SendEmail\Masivo;
 use App\Strategies\SendEmail\RecordarPago;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -16,6 +17,7 @@ class SendEmailJob implements ShouldQueue
 
     public const STRATEGY = [
         'RecordarPago'   => RecordarPago::class,
+        'Masivo'   => Masivo::class,
     ];
 
     public $parametros;

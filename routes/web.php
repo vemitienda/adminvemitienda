@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\PlanUsersController;
 use App\Http\Controllers\Admin\PaymentMethodsController;
 use App\Http\Controllers\Admin\PaymentsController;
 use App\Http\Controllers\PruebasController;
+use App\Http\Controllers\SendEmailsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,8 @@ Route::get('/', function () {
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/loguear', [LoginController::class, 'loguear'])->name('loguear');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::get('/masivo', [SendEmailsController::class, 'masivo'])->name('masivo');
 
 Route::get('/pruebas/{quantity}', [PruebasController::class, 'sumarDias'])->name('pruebas');
 

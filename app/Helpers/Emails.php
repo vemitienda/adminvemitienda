@@ -21,8 +21,21 @@ class Emails
                 $parametros['destinatario'] = $user->email;
                 $parametros['type'] = 'RecordarPago';
                 $parametros['subject'] = $subject;
-                $parametros['mensaje'] = $message;
 
+                dispatch(new SendEmailJob($parametros));
+            }
+        }
+    }
+
+    static function sendEmailMassive($users, $subject)
+    {
+        if (@count($users) > 0) {
+            foreach ($users as $user) {
+                $parametros['name'] = $user->name;
+                $parametros['company'] = $user->company;
+                $parametros['destinatario'] = $user->email;
+                $parametros['type'] = 'Masivo';
+                $parametros['subject'] = $subject;
                 dispatch(new SendEmailJob($parametros));
             }
         }
