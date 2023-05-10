@@ -31,6 +31,7 @@ class Emails
     {
         if (@count($users) > 0) {
             foreach ($users as $user) {
+                info('Se envió a: ' . $user->email);
                 $parametros['name'] = $user->name;
                 $parametros['company'] = $user->company;
                 $parametros['destinatario'] = $user->email;
