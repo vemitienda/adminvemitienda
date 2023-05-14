@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UsuarioRequest;
+use App\Models\PlanUser;
 use App\Models\Product;
 use App\User;
 use Illuminate\Http\Request;
@@ -29,11 +30,19 @@ class UsersController extends Controller
             })
             ->orderBy('id', 'desc')
             ->paginate(9);
-        // return $datos['infoData'];
-        $data['activos'] = User::query()
+
+        $data['total'] = User::count();
+
+        $data['verificados'] = User::query()
             ->where('email_verified_at', '>', '2000-01-01 00:00:00')
-            ->where('id', '>', 31)
             ->count();
+
+        $data['sinVerificar'] = User::query()
+            ->where('email_verified_at', null)
+            ->count();
+
+        $data['planActivo'] = PlanUser::where('plan_id', '>', 1)->count();
+
 
         $data['totalProductos'] = Product::count();
 
@@ -43,7 +52,8 @@ class UsersController extends Controller
             'Nombre' => 'name',
             'Email' => 'email',
             'n° Productos' => 'products_count',
-            'Alta' => 'created_at'
+            'Alta' => 'created_at',
+            'Verificado' => 'email_verified_at'
         ]);
 
         $datos['token'] = csrf_token();
