@@ -17,8 +17,8 @@ class CRON
             ->where('end_date', $threDaysAfter)
             ->pluck('user_id');
 
-        $message = "Recordatorio de vencimiento próximo";
-        $subject = "Le hacemos un recordatorio amistoso, de que su plan vencerá dentro de 3 días. Puede seguir probando la aplicación sin problemas";
+        $subject = "Recordatorio de vencimiento próximo";
+        $message = "Le hacemos un recordatorio amistoso, de que su plan vencerá dentro de 3 días. Puede seguir probando la aplicación sin problemas";
 
         try {
             Emails::sendEmailsUsers($userPaymentsArray, $message, $subject);
@@ -36,8 +36,8 @@ class CRON
             ->where('end_date', $twoDaysAfter)
             ->pluck('user_id');
 
-        $message = "Recordatorio de pago vencido";
-        $subject = "Le hacemos un recordatorio amistoso, de que su plan venció hace 2 días. Puede seguir probando la aplicación por 2 días más";
+        $subject = "Recordatorio de pago vencido";
+        $message = "Le hacemos un recordatorio amistoso, de que su plan venció hace 2 días. Puede seguir probando la aplicación por 2 días más";
 
         try {
             Emails::sendEmailsUsers($userPaymentsArray, $message, $subject);
