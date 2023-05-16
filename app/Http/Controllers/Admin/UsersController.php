@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UsuarioRequest;
 use App\Models\PlanUser;
 use App\Models\Product;
+use App\Models\Visit;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -55,6 +56,8 @@ class UsersController extends Controller
             'Alta' => 'created_at',
             'Verificado' => 'email_verified_at'
         ]);
+
+        $data['visits'] = Visit::count();
 
         $datos['token'] = csrf_token();
 

@@ -2,7 +2,7 @@
 @section('content')
     <div class="row">
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="small-box bg-success" style="padding: 10px">
                 <div class="inner">
                     <h3>{{ $total }}</h3>
@@ -11,7 +11,7 @@
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="small-box bg-info" style="padding: 10px">
                 <div class="inner">
                     <h3>{{ $totalProductos }}</h3>
@@ -20,7 +20,7 @@
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="small-box bg-success" style="padding: 10px">
                 <div class="inner">
                     <h3>{{ $usuariosConProductos }}</h3>
@@ -29,7 +29,7 @@
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="small-box bg-info" style="padding: 10px">
                 <div class="inner">
                     <h3>{{ $verificados }}</h3>
@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="small-box bg-success" style="padding: 10px">
                 <div class="inner">
                     <h3>{{ $sinVerificar }}</h3>
@@ -47,11 +47,20 @@
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="small-box bg-info" style="padding: 10px">
                 <div class="inner">
                     <h3>{{ $planActivo }} <span style="font-size:16px">(Usuarios reales)</span></h3>
-                    <p>Usuarios con plan de pago activo</p>
+                    <p>Usuarios con plan de pago</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="small-box bg-success" style="padding: 10px">
+                <div class="inner">
+                    <h3>{{ $visits }}</h3>
+                    <p>Visitas</p>
                 </div>
             </div>
         </div>
