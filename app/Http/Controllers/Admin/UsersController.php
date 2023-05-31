@@ -54,7 +54,7 @@ class UsersController extends Controller
             'Email' => 'email',
             'n° Productos' => 'products_count',
             'Alta' => 'created_at',
-            'Verificado' => 'email_verified_at'
+            'Inválido' => 'invalid'
         ]);
 
         $data['visits'] = Visit::count();
