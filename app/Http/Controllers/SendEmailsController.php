@@ -10,13 +10,13 @@ class SendEmailsController extends Controller
 {
     public function masivo()
     {
-        $users = User::with('company')
-            ->get();
+        $type = request()->type;
+        $users = User::with('company')->where('id', 198)->get();
 
-        $subject = "¿Necesitas ayuda?";
+        $subject = "Nuestra App ahora es GRATIS";
 
         try {
-            Emails::sendEmailMassive($users, $subject);
+            Emails::sendEmailMassive($users, $subject, $type);
         } catch (\Throwable $th) {
             info($th);
         }

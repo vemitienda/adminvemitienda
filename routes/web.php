@@ -11,7 +11,7 @@ use App\Http\Controllers\Admin\PlanUsersController;
 use App\Http\Controllers\Admin\PaymentMethodsController;
 use App\Http\Controllers\Admin\PaymentsController;
 use App\Http\Controllers\PruebasController;
-use App\Http\Controllers\SendEmailsController;
+
 
 /*
 |--------------------------------------------------------------------------

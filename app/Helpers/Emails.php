@@ -27,15 +27,14 @@ class Emails
         }
     }
 
-    static function sendEmailMassive($users, $subject)
+    static function sendEmailMassive($users, $subject, $type)
     {
         if (@count($users) > 0) {
             foreach ($users as $user) {
-                info('Se envió email masivo a: id=>' . $user->id . ' email=>' . $user->email);
                 $parametros['name'] = $user->name;
                 $parametros['company'] = $user->company;
                 $parametros['destinatario'] = $user->email;
-                $parametros['type'] = 'Masivo';
+                $parametros['type'] = $type;
                 $parametros['subject'] = $subject;
                 try {
                     dispatch(new SendEmailJob($parametros));
