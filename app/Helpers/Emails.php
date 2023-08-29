@@ -30,15 +30,19 @@ class Emails
     static function sendEmailMassive($users, $subject, $type)
     {
         if (@count($users) > 0) {
+
             foreach ($users as $user) {
-                $parametros['name'] = $user->name;
+                info($user->email);
+                $parametros['name'] = $user->company->name;
                 $parametros['company'] = $user->company;
                 $parametros['destinatario'] = $user->email;
                 $parametros['type'] = $type;
                 $parametros['subject'] = $subject;
                 try {
                     dispatch(new SendEmailJob($parametros));
+                    info("Enviado");
                 } catch (\Throwable $th) {
+                    info($th);
                     //throw $th;
                 }
             }

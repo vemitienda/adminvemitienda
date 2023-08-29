@@ -11,6 +11,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Ramsey\Uuid\Uuid;
 
 class SendEmailJob implements ShouldQueue
 {
@@ -23,6 +24,7 @@ class SendEmailJob implements ShouldQueue
     ];
 
     public $parametros;
+    public $timeout = 70;
 
     /**
      * Create a new job instance.
