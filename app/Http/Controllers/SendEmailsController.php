@@ -11,7 +11,7 @@ class SendEmailsController extends Controller
     public function masivo()
     {
         $type = request()->type;
-        $users = User::with('company')->where('id', 198)->get();
+        $users = User::with('company')->where('invalid', 0)->where('marketing', 0)->limit(10)->get();
 
         $subject = "Nuestra App ahora es GRATIS";
 

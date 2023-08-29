@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\User;
 use App\Strategies\SendEmail\Masivo;
 use App\Strategies\SendEmail\RecordarPago;
 use App\Strategies\SendEmail\CampaniaGratis;
@@ -41,8 +42,15 @@ class SendEmailJob implements ShouldQueue
      */
     public function handle()
     {
-        $estrategyClass = $this::STRATEGY[$this->parametros['type']];
-        $estrategy = new $estrategyClass();
-        $estrategy->sendEmail($this->parametros);
+        try {
+            $estrategyClass = $this::STRATEGY[$this->parametros['type']];
+            $estrategy = new $estrategyClass();
+            $estrategy->sendEmail($this->parametros);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+        $user = User::where('email', $this->parametros['destinatario'])->first();
+        $user->marketing = 1;
+        $user->save();
     }
 }
