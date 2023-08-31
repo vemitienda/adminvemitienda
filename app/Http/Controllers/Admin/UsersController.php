@@ -23,8 +23,9 @@ class UsersController extends Controller
     {
         $filtrar = request()->get('query');
 
-        $datos['infoData'] = User::has('products')->withCount('Products')
+        $datos['infoData'] = User::withCount('Products')
             ->whereNotNull('provider_user_id')
+            ->where('invalid', 0)
             ->when($filtrar, function ($q) use ($filtrar) {
                 $q->where('name', 'like', '%' . $filtrar . '%');
                 $q->orWhere('email', 'like', '%' . $filtrar . '%');
@@ -42,7 +43,7 @@ class UsersController extends Controller
         $data['totalUsuariosReales'] = $users->count();
         $data['totalProductosReales'] = Product::whereIn('user_id', $usersArray)->get()->count();
 
-        $data['usuariosRealesConProductos'] = User::has('products')->count();
+        $data['usuariosRealesConProductos'] = User::has('products')->whereIn('id', $usersArray)->count();
 
         $datos['nombreColumnas'] = collect([
             'Nombre' => 'name',
