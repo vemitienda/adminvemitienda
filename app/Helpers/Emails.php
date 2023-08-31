@@ -33,7 +33,7 @@ class Emails
 
             foreach ($users as $user) {
                 info($user->email);
-                $parametros['name'] = $user->company->name;
+                $parametros['name'] = @$user->company->name || null;
                 $parametros['company'] = $user->company;
                 $parametros['destinatario'] = $user->email;
                 $parametros['type'] = $type;

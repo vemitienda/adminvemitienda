@@ -1,70 +1,37 @@
 @extends('layouts.adminlte.index')
 @section('content')
+    <h3>Totales</h3>
     <div class="row">
 
         <div class="col-md-3">
-            <div class="small-box bg-success" style="padding: 10px">
-                <div class="inner">
-                    <h3>{{ $total }}</h3>
-                    <p>Usuarios</p>
-                </div>
-            </div>
+            <x-cardDashboard title="Usuarios totales" number="{{ $usuariosTotales }}" />
         </div>
 
         <div class="col-md-3">
-            <div class="small-box bg-info" style="padding: 10px">
-                <div class="inner">
-                    <h3>{{ $totalProductos }}</h3>
-                    <p>Productos en total</p>
-                </div>
-            </div>
+            <x-cardDashboard title="Productos totales" number="{{ $productosTotales }}" />
         </div>
 
         <div class="col-md-3">
-            <div class="small-box bg-success" style="padding: 10px">
-                <div class="inner">
-                    <h3>{{ $usuariosConProductos }}</h3>
-                    <p>Usuarios con Productos</p>
-                </div>
-            </div>
+            <x-cardDashboard title="Visitas" number="{{ $visits }}" />
+        </div>
+
+    </div>
+
+    <hr />
+
+    <h3>Reales</h3>
+    <div class="row">
+        <div class="col-md-3">
+            <x-cardDashboard title="Total usuarios" number="{{ $totalUsuariosReales }}" />
         </div>
 
         <div class="col-md-3">
-            <div class="small-box bg-info" style="padding: 10px">
-                <div class="inner">
-                    <h3>{{ $verificados }}</h3>
-                    <p>Usuarios verificados</p>
-                </div>
-            </div>
+            <x-cardDashboard title="Total productos" number="{{ $totalProductosReales }}" />
         </div>
 
         <div class="col-md-3">
-            <div class="small-box bg-success" style="padding: 10px">
-                <div class="inner">
-                    <h3>{{ $sinVerificar }}</h3>
-                    <p>Usuarios no verificados</p>
-                </div>
-            </div>
+            <x-cardDashboard title="Usuarios con productos" number="{{ $usuariosRealesConProductos }}" />
         </div>
-
-        <div class="col-md-3">
-            <div class="small-box bg-info" style="padding: 10px">
-                <div class="inner">
-                    <h3>{{ $planActivo }} <span style="font-size:16px">(Usuarios reales)</span></h3>
-                    <p>Usuarios con plan de pago</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="small-box bg-success" style="padding: 10px">
-                <div class="inner">
-                    <h3>{{ $visits }}</h3>
-                    <p>Visitas</p>
-                </div>
-            </div>
-        </div>
-
     </div>
 
 

@@ -23,7 +23,8 @@ class UsersController extends Controller
     {
         $filtrar = request()->get('query');
 
-        $datos['infoData'] = User::withCount('Products')
+        $datos['infoData'] = User::has('products')->withCount('Products')
+            ->whereNotNull('provider_user_id')
             ->when($filtrar, function ($q) use ($filtrar) {
                 $q->where('name', 'like', '%' . $filtrar . '%');
                 $q->orWhere('email', 'like', '%' . $filtrar . '%');
@@ -32,22 +33,16 @@ class UsersController extends Controller
             ->orderBy('id', 'desc')
             ->paginate(9);
 
-        $data['total'] = User::count();
+        $data['usuariosTotales'] = User::count();
+        $data['productosTotales'] = Product::count();
 
-        $data['verificados'] = User::query()
-            ->where('email_verified_at', '>', '2000-01-01 00:00:00')
-            ->count();
+        $users = User::whereNotNull('provider_user_id')->select('id')->get();
+        $usersArray = $users->pluck('id')->toArray();
 
-        $data['sinVerificar'] = User::query()
-            ->where('email_verified_at', null)
-            ->count();
+        $data['totalUsuariosReales'] = $users->count();
+        $data['totalProductosReales'] = Product::whereIn('user_id', $usersArray)->get()->count();
 
-        $data['planActivo'] = PlanUser::where('plan_id', '>', 1)->count();
-
-
-        $data['totalProductos'] = Product::count();
-
-        $data['usuariosConProductos'] = Product::groupBy('user_id')->get()->count();
+        $data['usuariosRealesConProductos'] = User::has('products')->count();
 
         $datos['nombreColumnas'] = collect([
             'Nombre' => 'name',
